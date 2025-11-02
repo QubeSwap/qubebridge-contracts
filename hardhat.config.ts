@@ -60,8 +60,8 @@ const qubeticsPrivateKey = process.env.QUBETICS_PRIVATE_KEY || DEFAULT_PRIVATE_K
 const avalancheEndpoint = process.env.AVALANCHE_ENDPOINT || DEFAULT_ENDPOINT;
 const avalanchePrivateKey = process.env.AVALANCHE_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
 
-const optimismEndpoint = process.env.OPTIMISM_ENDPOINT || DEFAULT_ENDPOINT;
-const optimismPrivateKey = process.env.OPTIMISM_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
+const seiEndpoint = process.env.SEI_ENDPOINT || DEFAULT_ENDPOINT;
+const seiPrivateKey = process.env.SEI_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
 
 // use kmsKeyId if it's not empty, otherwise use privateKey
 function getNetworkConfig(url: string, kmsKeyId: string, privateKey: string, gasPrice?: number): NetworkUserConfig {
@@ -123,6 +123,7 @@ const config: HardhatUserConfig = {
     avalanche: getNetworkConfig(avalancheEndpoint, kmsKeyId, avalanchePrivateKey),
 	qubetics: getNetworkConfig(qubeticsEndpoint, kmsKeyId, qubeticsPrivateKey),
     base: getNetworkConfig(baseEndpoint, kmsKeyId, basePrivateKey),
+	sei: getNetworkConfig(seiEndpoint, kmsKeyId, seiPrivateKey),
   },
   namedAccounts: {
     deployer: {
@@ -196,6 +197,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: process.env.AVALANCHE_API_ENDPOINT || '',
           browserURL: process.env.AVALANCHE_EXPLORER || ''
+        }
+      },
+	  {
+        network: 'sei',
+        chainId: 1329,
+        urls: {
+          apiURL: process.env.SEI_API_ENDPOINT || '',
+          browserURL: process.env.SEI_EXPLORER || ''
         }
       },
 	  {
