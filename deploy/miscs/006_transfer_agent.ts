@@ -9,10 +9,11 @@ const deployFunc: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
 
-    await deploy('TransferAgent', {
+    const transferAgent = await deploy('TransferAgent', {
         from: deployer,
         log: true
     });
+	await hre.run('verify:verify', { address: transferAgent.address });
 };
 
 deployFunc.tags = ['TransferAgent'];
