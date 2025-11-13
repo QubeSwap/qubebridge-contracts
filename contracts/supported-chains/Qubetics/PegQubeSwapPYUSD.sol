@@ -7,22 +7,22 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract QubeSwapUSDT is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
+contract PegQubeSwapPYUSD is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
     using ECDSA for bytes32;
 
     address private _admin;
 
     // --- Custom Errors ---
-    error QubeSwapUSDT__NotMinter();
-    error QubeSwapUSDT__ZeroAddress();
-    error QubeSwapUSDT__InsufficientBalance(uint256 balance, uint256 amount);
+    error PegQubeSwapPYUSD__NotMinter();
+    error PegQubeSwapPYUSD__ZeroAddress();
+    error PegQubeSwapPYUSD__InsufficientBalance(uint256 balance, uint256 amount);
 
     // --- Roles ---
     bytes32 public constant BRIDGE_ROLE = keccak256("BRIDGE_ROLE");
 
     // --- Constants ---
-    string private constant _NAME = "QubeSwapUSDT";
-    string private constant _SYMBOL = "USDT";
+    string private constant _NAME = "PegQubeSwapPYUSD";
+    string private constant _SYMBOL = "PYUSD";
     uint8 private immutable _DECIMALS = 6;
 
     // --- Events ---
@@ -46,9 +46,9 @@ contract QubeSwapUSDT is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
      */
     function mint(address to, uint256 amount) external nonReentrant {
         if (!hasRole(BRIDGE_ROLE, msg.sender)) {
-            revert QubeSwapUSDT__NotMinter();
+            revert PegQubeSwapPYUSD__NotMinter();
         }
-        if (to == address(0)) revert QubeSwapUSDT__ZeroAddress();
+        if (to == address(0)) revert PegQubeSwapPYUSD__ZeroAddress();
         _mint(to, amount);
         emit Mint(to, amount);
     }
@@ -60,11 +60,11 @@ contract QubeSwapUSDT is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
      */
     function burn(address from, uint256 amount) external nonReentrant {
         if (!hasRole(BRIDGE_ROLE, msg.sender)) {
-            revert QubeSwapUSDT__NotMinter();
+            revert PegQubeSwapPYUSD__NotMinter();
         }
-        if (from == address(0)) revert QubeSwapUSDT__ZeroAddress();
+        if (from == address(0)) revert PegQubeSwapPYUSD__ZeroAddress();
         if (balanceOf(from) < amount) {
-            revert QubeSwapUSDT__InsufficientBalance(balanceOf(from), amount);
+            revert PegQubeSwapPYUSD__InsufficientBalance(balanceOf(from), amount);
         }
         _burn(from, amount);
         emit Burn(from, amount);
