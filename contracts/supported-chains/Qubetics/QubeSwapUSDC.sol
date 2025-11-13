@@ -10,19 +10,20 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
     using ECDSA for bytes32;
 
+    address private _admin;
+
     // --- Custom Errors ---
     error QubeSwapUSDC__NotMinter();
     error QubeSwapUSDC__ZeroAddress();
     error QubeSwapUSDC__InsufficientBalance(uint256 balance, uint256 amount);
 
     // --- Roles ---
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant BRIDGE_ROLE = keccak256("BRIDGE_ROLE");
 
     // --- Constants ---
     string private constant _NAME = "QubeSwapUSDC";
     string private constant _SYMBOL = "USDC";
-    uint8 private constant _DECIMALS = 6;
+    uint8 private immutable _DECIMALS = 6;
 
     // --- Events ---
     event Mint(address indexed to, uint256 amount);
@@ -32,8 +33,8 @@ contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
 
     // --- Constructor ---
     constructor() ERC20(_NAME, _SYMBOL) ERC20Permit(_NAME) {
+        _admin = msg.sender; // Set deployer as admin
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(BRIDGE_ROLE, msg.sender); // Initially grant to deployer; bridge will be set later
     }
 
@@ -44,7 +45,7 @@ contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
      * @param amount Amount to mint.
      */
     function mint(address to, uint256 amount) external nonReentrant {
-        if (!hasRole(MINTER_ROLE, msg.sender) && !hasRole(BRIDGE_ROLE, msg.sender)) {
+        if (!hasRole(BRIDGE_ROLE, msg.sender)) {
             revert QubeSwapUSDC__NotMinter();
         }
         if (to == address(0)) revert QubeSwapUSDC__ZeroAddress();
@@ -58,7 +59,7 @@ contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
      * @param amount Amount to burn.
      */
     function burn(address from, uint256 amount) external nonReentrant {
-        if (!hasRole(MINTER_ROLE, msg.sender) && !hasRole(BRIDGE_ROLE, msg.sender)) {
+        if (!hasRole(BRIDGE_ROLE, msg.sender)) {
             revert QubeSwapUSDC__NotMinter();
         }
         if (from == address(0)) revert QubeSwapUSDC__ZeroAddress();
@@ -67,6 +68,13 @@ contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
         }
         _burn(from, amount);
         emit Burn(from, amount);
+    }
+
+    /**
+     * @notice Returns the decimals of the token.
+     */
+    function decimals() public view virtual override returns (uint8) {
+        return _DECIMALS;
     }
 
     // --- Bridge Role Management ---
@@ -94,5 +102,12 @@ contract QubeSwapUSDC is ERC20, ERC20Permit, AccessControl, ReentrancyGuard {
         uint256 amount
     ) public override returns (bool) {
         return super.transferFrom(from, to, amount);
+    }
+
+    /**
+     * @notice Returns the owner address. Required by BEP20.
+     */
+    function getOwner() external view returns (address) {
+        return _admin;
     }
 }
