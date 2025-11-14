@@ -21,7 +21,7 @@ contract PegQubeSwapPYUSD is ERC20, ERC20Permit, AccessControl, ReentrancyGuard 
     bytes32 public constant BRIDGE_ROLE = keccak256("BRIDGE_ROLE");
 
     // --- Constants ---
-    string private constant _NAME = "PegQubeSwapPYUSD";
+    string private constant _NAME = "QubeSwapPYUSD";
     string private constant _SYMBOL = "PYUSD";
     uint8 private immutable _DECIMALS = 6;
 
