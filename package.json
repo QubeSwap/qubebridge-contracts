@@ -1,5 +1,5 @@
 {
-  "name": "sgn-v2-contracts",
+  "name": "qubebridge-contracts",
   "version": "0.2.0",
   "description": "SGN V2 Contracts",
   "scripts": {
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/qubeswap/sgn-v2-contracts.git"
+    "url": "git+https://github.com/qubeswap/qubebridge-contracts.git"
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/qubeswap/sgn-v2-contracts/issues"
+    "url": "https://github.com/qubeswap/qubebridge-contracts/issues"
   },
-  "homepage": "https://github.com/qubeswap/sgn-v2-contracts#readme",
+  "homepage": "https://github.com/qubeswap/qubebridge-contracts#readme",
   "devDependencies": {
     "@aws-sdk/client-kms": "^3.606.0",
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.7",
