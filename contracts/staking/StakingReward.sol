@@ -41,7 +41,7 @@ contract StakingReward is Pauser {
         uint256 newReward = cumulativeRewardAmount - claimedRewardAmounts[reward.recipient];
         require(newReward > 0, "No new reward");
         claimedRewardAmounts[reward.recipient] = cumulativeRewardAmount;
-        staking.XQUBESWAP_TOKEN().safeTransfer(reward.recipient, newReward);
+        staking.XQS_TOKEN().safeTransfer(reward.recipient, newReward);
         emit StakingRewardClaimed(reward.recipient, newReward);
     }
 
@@ -51,7 +51,7 @@ contract StakingReward is Pauser {
      */
     function contributeToRewardPool(uint256 _amount) external whenNotPaused {
         address contributor = msg.sender;
-        IERC20(staking.XQUBESWAP_TOKEN()).safeTransferFrom(contributor, address(this), _amount);
+        IERC20(staking.XQS_TOKEN()).safeTransferFrom(contributor, address(this), _amount);
 
         emit StakingRewardContributed(contributor, _amount);
     }
@@ -62,6 +62,6 @@ contract StakingReward is Pauser {
      * @param _amount drained XQST token amount
      */
     function drainToken(uint256 _amount) external whenPaused onlyOwner {
-        IERC20(staking.XQUBESWAP_TOKEN()).safeTransfer(msg.sender, _amount);
+        IERC20(staking.XQS_TOKEN()).safeTransfer(msg.sender, _amount);
     }
 }

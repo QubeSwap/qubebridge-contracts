@@ -18,7 +18,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
     using SafeERC20 for IERC20;
     using ECDSA for bytes32;
 
-    IERC20 public immutable XQUBESWAP_TOKEN;
+    IERC20 public immutable XQS_TOKEN;
 
     uint256 public bondedTokens;
     uint256 public nextBondBlock;
@@ -49,7 +49,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
 
     /**
      * @notice Staking constructor
-     * @param _xqsTokenAddress address of Celer Token Contract
+     * @param _xqsTokenAddress address of QubeBridge Token Contract
      * @param _proposalDeposit required deposit amount for a governance proposal
      * @param _votingPeriod voting timeout for a governance proposal
      * @param _unbondingPeriod the locking time for funds locked before withdrawn
@@ -72,7 +72,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
         uint256 _validatorBondInterval,
         uint256 _maxSlashFactor
     ) {
-        XQUBESWAP_TOKEN = IERC20(_xqsTokenAddress);
+        XQS_TOKEN = IERC20(_xqsTokenAddress);
 
         params[dt.ParamName.ProposalDeposit] = _proposalDeposit;
         params[dt.ParamName.VotingPeriod] = _votingPeriod;
@@ -222,7 +222,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
             bondedTokens += _tokens;
             _decentralizationCheck(validator.tokens);
         }
-        XQUBESWAP_TOKEN.safeTransferFrom(delAddr, address(this), _tokens);
+        XQS_TOKEN.safeTransferFrom(delAddr, address(this), _tokens);
         emit DelegationUpdate(_valAddr, delAddr, validator.tokens, delegator.shares, int256(_tokens));
     }
 
@@ -285,7 +285,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
         uint256 tokens = _shareToToken(undelegationShares, validator.undelegationTokens, validator.undelegationShares);
         validator.undelegationShares -= undelegationShares;
         validator.undelegationTokens -= tokens;
-        XQUBESWAP_TOKEN.safeTransfer(delAddr, tokens);
+        XQS_TOKEN.safeTransfer(delAddr, tokens);
         emit Undelegated(_valAddr, delAddr, tokens);
     }
 
@@ -370,10 +370,10 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
             if (collector.amount > 0) {
                 collectAmt += collector.amount;
                 if (collector.account == address(0)) {
-                    XQUBESWAP_TOKEN.safeTransfer(msg.sender, collector.amount);
+                    XQS_TOKEN.safeTransfer(msg.sender, collector.amount);
                     emit SlashAmtCollected(msg.sender, collector.amount);
                 } else {
-                    XQUBESWAP_TOKEN.safeTransfer(collector.account, collector.amount);
+                    XQS_TOKEN.safeTransfer(collector.account, collector.amount);
                     emit SlashAmtCollected(collector.account, collector.amount);
                 }
             }
@@ -384,7 +384,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
 
     function collectForfeiture() external {
         require(forfeiture > 0, "Nothing to collect");
-        XQUBESWAP_TOKEN.safeTransfer(rewardContract, forfeiture);
+        XQS_TOKEN.safeTransfer(rewardContract, forfeiture);
         forfeiture = 0;
     }
 
@@ -430,7 +430,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
      * @param _amount drained token amount
      */
     function drainToken(uint256 _amount) external whenPaused onlyOwner {
-        XQUBESWAP_TOKEN.safeTransfer(msg.sender, _amount);
+        XQS_TOKEN.safeTransfer(msg.sender, _amount);
     }
 
     /**************************
@@ -638,7 +638,7 @@ contract Staking is ISigsVerifier, Pauser, Whitelist {
         require(delegator.shares == 0 || delegator.shares >= dt.XQST_DECIMAL, "not enough remaining shares");
 
         if (validator.status == dt.ValidatorStatus.Unbonded) {
-            XQUBESWAP_TOKEN.safeTransfer(delAddr, _tokens);
+            XQS_TOKEN.safeTransfer(delAddr, _tokens);
             emit Undelegated(_valAddr, delAddr, _tokens);
             return;
         } else if (validator.status == dt.ValidatorStatus.Bonded) {

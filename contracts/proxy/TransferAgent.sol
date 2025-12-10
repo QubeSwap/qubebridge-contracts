@@ -45,7 +45,7 @@ contract TransferAgent is ReentrancyGuard, Ownable {
      *        Only applicable to the {BridgeSendType.Liquidity}.
      * @param _bridgeSendType The type of bridge used by this transfer. One of the {BridgeSendType} enum.
      * @param _extensions A list of extension to be processed by agent, is designed to be used for extending
-     *        present transfer. Contact Celer team to learn about already supported type of extension.
+     *        present transfer. Contact QubeSwap team to learn about already supported type of extension.
      */
     function transfer(
         bytes calldata _receiver,
@@ -89,7 +89,7 @@ contract TransferAgent is ReentrancyGuard, Ownable {
      *        Only applicable to the {BridgeSendType.Liquidity}.
      * @param _bridgeSendType The type of bridge used by this transfer. One of the {BridgeSendType} enum.
      * @param _extensions A list of extension to be processed by agent, is designed to be used for extending
-     *        present transfer. Contact Celer team to learn about already supported type of extension.
+     *        present transfer. Contact QubeSwap team to learn about already supported type of extension.
      */
     function transferNative(
         bytes calldata _receiver,

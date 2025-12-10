@@ -10,7 +10,7 @@ import "./Pool.sol";
 /**
  * @title The liquidity-pool based bridge.
  */
-contract QubeBridge is Pool {
+contract Bridge is Pool {
     using SafeERC20 for IERC20;
 
     // liquidity events

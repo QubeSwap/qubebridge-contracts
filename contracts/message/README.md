@@ -1,1 +1,1 @@
-[Celer Inter-chain Message (IM) Developer Docs](https://im-docs.celer.network/)
+[QubeBridge Inter-chain Message (IM) Developer Docs](https://im-docs.qubeswap.com/)
