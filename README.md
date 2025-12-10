@@ -1,6 +1,6 @@
 # SGN Contracts
 
-Contracts for the Celer State Guardian Network (SGN) V2.
+Contracts for the QubeBridge State Guardian Network (SGN) V2.
 
 ### Run unit tests
 
