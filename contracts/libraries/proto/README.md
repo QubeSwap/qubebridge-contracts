@@ -16,3 +16,39 @@ From the project repo root, run:
 ```sh
 protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/{filename}.proto
 ```
+
+# Attention:
+Before proceeding, please make sure you have built "pb3-gen-sol"
+from https://github.com/QubeSwap/pb3-gen-sol
+
+# First Install protoc
+sudo snap install protobuf --classic
+
+## Check version:
+protoc --version
+
+Then:
+cd qubebridge-contracts
+
+Then DO:
+### bridge.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/bridge.proto
+
+### farming.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/farming.proto
+
+### pegged.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/pegged.proto
+
+### pool.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/pool.proto
+
+### sgn.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/sgn.proto
+
+### staking.proto:
+protoc --sol_out=importpb=true:contracts/libraries contracts/libraries/proto/staking.proto
+
+
+## Note:
+proto files can have different package names, and generated .sol file name is proto package name.
