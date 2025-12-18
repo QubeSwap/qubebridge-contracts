@@ -6,15 +6,15 @@ pragma solidity 0.8.17;
 import "./Pb.sol";
 
 library PbPool {
-    using Pb for Pb.Buffer; // so we can call Pb funcs on Buffer obj
+    using Pb for Pb.Buffer;  // so we can call Pb funcs on Buffer obj
 
     struct WithdrawMsg {
-        uint64 chainid; // tag: 1
-        uint64 seqnum; // tag: 2
-        address receiver; // tag: 3
-        address token; // tag: 4
-        uint256 amount; // tag: 5
-        bytes32 refid; // tag: 6
+        uint64 chainid;   // tag: 1
+        uint64 seqnum;   // tag: 2
+        address receiver;   // tag: 3
+        address token;   // tag: 4
+        uint256 amount;   // tag: 5
+        bytes32 refid;   // tag: 6
     } // end struct WithdrawMsg
 
     function decWithdrawMsg(bytes memory raw) internal pure returns (WithdrawMsg memory m) {
@@ -24,23 +24,27 @@ library PbPool {
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.chainid = uint64(buf.decVarint());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.seqnum = uint64(buf.decVarint());
-            } else if (tag == 3) {
+            }
+            else if (tag == 3) {
                 m.receiver = Pb._address(buf.decBytes());
-            } else if (tag == 4) {
+            }
+            else if (tag == 4) {
                 m.token = Pb._address(buf.decBytes());
-            } else if (tag == 5) {
+            }
+            else if (tag == 5) {
                 m.amount = Pb._uint256(buf.decBytes());
-            } else if (tag == 6) {
+            }
+            else if (tag == 6) {
                 m.refid = Pb._bytes32(buf.decBytes());
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder WithdrawMsg
+
 }

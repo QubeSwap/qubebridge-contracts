@@ -6,11 +6,11 @@ pragma solidity 0.8.17;
 import "./Pb.sol";
 
 library PbStaking {
-    using Pb for Pb.Buffer; // so we can call Pb funcs on Buffer obj
+    using Pb for Pb.Buffer;  // so we can call Pb funcs on Buffer obj
 
     struct StakingReward {
-        address recipient; // tag: 1
-        uint256 cumulativeRewardAmount; // tag: 2
+        address recipient;   // tag: 1
+        uint256 cumulativeRewardAmount;   // tag: 2
     } // end struct StakingReward
 
     function decStakingReward(bytes memory raw) internal pure returns (StakingReward memory m) {
@@ -20,25 +20,24 @@ library PbStaking {
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.recipient = Pb._address(buf.decBytes());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.cumulativeRewardAmount = Pb._uint256(buf.decBytes());
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder StakingReward
 
     struct Slash {
-        address validator; // tag: 1
-        uint64 nonce; // tag: 2
-        uint64 slashFactor; // tag: 3
-        uint64 expireTime; // tag: 4
-        uint64 jailPeriod; // tag: 5
-        AcctAmtPair[] collectors; // tag: 6
+        address validator;   // tag: 1
+        uint64 nonce;   // tag: 2
+        uint64 slashFactor;   // tag: 3
+        uint64 expireTime;   // tag: 4
+        uint64 jailPeriod;   // tag: 5
+        AcctAmtPair[] collectors;   // tag: 6
     } // end struct Slash
 
     function decSlash(bytes memory raw) internal pure returns (Slash memory m) {
@@ -46,36 +45,39 @@ library PbStaking {
 
         uint256[] memory cnts = buf.cntTags(6);
         m.collectors = new AcctAmtPair[](cnts[6]);
-        cnts[6] = 0; // reset counter for later use
-
+        cnts[6] = 0;  // reset counter for later use
+        
         uint256 tag;
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.validator = Pb._address(buf.decBytes());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.nonce = uint64(buf.decVarint());
-            } else if (tag == 3) {
+            }
+            else if (tag == 3) {
                 m.slashFactor = uint64(buf.decVarint());
-            } else if (tag == 4) {
+            }
+            else if (tag == 4) {
                 m.expireTime = uint64(buf.decVarint());
-            } else if (tag == 5) {
+            }
+            else if (tag == 5) {
                 m.jailPeriod = uint64(buf.decVarint());
-            } else if (tag == 6) {
+            }
+            else if (tag == 6) {
                 m.collectors[cnts[6]] = decAcctAmtPair(buf.decBytes());
                 cnts[6]++;
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder Slash
 
     struct AcctAmtPair {
-        address account; // tag: 1
-        uint256 amount; // tag: 2
+        address account;   // tag: 1
+        uint256 amount;   // tag: 2
     } // end struct AcctAmtPair
 
     function decAcctAmtPair(bytes memory raw) internal pure returns (AcctAmtPair memory m) {
@@ -85,15 +87,15 @@ library PbStaking {
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.account = Pb._address(buf.decBytes());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.amount = Pb._uint256(buf.decBytes());
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder AcctAmtPair
+
 }

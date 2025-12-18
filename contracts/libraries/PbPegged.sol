@@ -6,15 +6,15 @@ pragma solidity 0.8.17;
 import "./Pb.sol";
 
 library PbPegged {
-    using Pb for Pb.Buffer; // so we can call Pb funcs on Buffer obj
+    using Pb for Pb.Buffer;  // so we can call Pb funcs on Buffer obj
 
     struct Mint {
-        address token; // tag: 1
-        address account; // tag: 2
-        uint256 amount; // tag: 3
-        address depositor; // tag: 4
-        uint64 refChainId; // tag: 5
-        bytes32 refId; // tag: 6
+        address token;   // tag: 1
+        address account;   // tag: 2
+        uint256 amount;   // tag: 3
+        address depositor;   // tag: 4
+        uint64 refChainId;   // tag: 5
+        bytes32 refId;   // tag: 6
     } // end struct Mint
 
     function decMint(bytes memory raw) internal pure returns (Mint memory m) {
@@ -24,33 +24,36 @@ library PbPegged {
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.token = Pb._address(buf.decBytes());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.account = Pb._address(buf.decBytes());
-            } else if (tag == 3) {
+            }
+            else if (tag == 3) {
                 m.amount = Pb._uint256(buf.decBytes());
-            } else if (tag == 4) {
+            }
+            else if (tag == 4) {
                 m.depositor = Pb._address(buf.decBytes());
-            } else if (tag == 5) {
+            }
+            else if (tag == 5) {
                 m.refChainId = uint64(buf.decVarint());
-            } else if (tag == 6) {
+            }
+            else if (tag == 6) {
                 m.refId = Pb._bytes32(buf.decBytes());
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder Mint
 
     struct Withdraw {
-        address token; // tag: 1
-        address receiver; // tag: 2
-        uint256 amount; // tag: 3
-        address burnAccount; // tag: 4
-        uint64 refChainId; // tag: 5
-        bytes32 refId; // tag: 6
+        address token;   // tag: 1
+        address receiver;   // tag: 2
+        uint256 amount;   // tag: 3
+        address burnAccount;   // tag: 4
+        uint64 refChainId;   // tag: 5
+        bytes32 refId;   // tag: 6
     } // end struct Withdraw
 
     function decWithdraw(bytes memory raw) internal pure returns (Withdraw memory m) {
@@ -60,23 +63,27 @@ library PbPegged {
         Pb.WireType wire;
         while (buf.hasMore()) {
             (tag, wire) = buf.decKey();
-            if (false) {}
-            // solidity has no switch/case
+            if (false) {} // solidity has no switch/case
             else if (tag == 1) {
                 m.token = Pb._address(buf.decBytes());
-            } else if (tag == 2) {
+            }
+            else if (tag == 2) {
                 m.receiver = Pb._address(buf.decBytes());
-            } else if (tag == 3) {
+            }
+            else if (tag == 3) {
                 m.amount = Pb._uint256(buf.decBytes());
-            } else if (tag == 4) {
+            }
+            else if (tag == 4) {
                 m.burnAccount = Pb._address(buf.decBytes());
-            } else if (tag == 5) {
+            }
+            else if (tag == 5) {
                 m.refChainId = uint64(buf.decVarint());
-            } else if (tag == 6) {
+            }
+            else if (tag == 6) {
                 m.refId = Pb._bytes32(buf.decBytes());
-            } else {
-                buf.skipValue(wire);
-            } // skip value of unknown tag
+            }
+            else { buf.skipValue(wire); } // skip value of unknown tag
         }
     } // end decoder Withdraw
+
 }
