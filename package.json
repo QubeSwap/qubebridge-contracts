@@ -1,11 +1,11 @@
 {
   "name": "qubebridge-contracts",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "SGN V2 Contracts",
   "scripts": {
     "cleanup": "hardhat clean",
     "compile": "hardhat compile",
-	"clean": "rm -rf node_modules rm -rf .next rm -rf typechain",
+	"clean": "rm -rf node_modules && rm -rf .next && rm -rf typechain",
     "generate:typechain": "rm -rf typechain && hardhat typechain",
     "report-gas:summary": "REPORT_GAS=true hardhat test",
     "report-gas:benchmark": "hardhat test benchmark/*.ts",
