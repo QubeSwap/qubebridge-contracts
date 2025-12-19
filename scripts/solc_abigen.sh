@@ -9,7 +9,7 @@ SOLC_VER="v0.8.17+commit.8df45f5f"
 OPENZEPPELIN="openzeppelin-contracts-4.5.0"          # if change, also need to change the url in dld_solc
 GETH_VER="geth-alltools-linux-amd64-1.10.7-12f0ff40" # for abigen
 CNTRDIR="contracts"                                  # folder name for all contracts code
-GO_REPO=https://${GH_TOKEN}@github.com/celer-network/sgn-v2
+GO_REPO=https://${GH_TOKEN}@github.com/qubeswap/sgn-v2
 
 # xx.sol under contracts/, no need for .sol suffix, if sol file is in subfolder, just add the relative path
 solFiles=(
@@ -101,7 +101,7 @@ run_abigen() {
 }
 
 setup_git() {
-  git config --global user.email "build@celer.network"
+  git config --global user.email "build@qubeswap.com"
   git config --global user.name "Build Bot"
   git config --global push.default "current"
 }
