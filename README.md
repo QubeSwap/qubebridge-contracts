@@ -2,6 +2,24 @@
 
 Contracts for the QubeBridge State Guardian Network (SGN) V2.
 
+### NodeJs Version
+```sh
+nvm install 20
+nvm use 20
+```
+
+### Install & Compile
+```sh
+yarn install
+yarn compile
+```
+
+### Clean
+```sh
+yarn cleanup
+yarn clean
+```
+
 ### Run unit tests
 
 ```sh
