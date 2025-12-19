@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./FeeOperator.sol";
-import "../interfaces/ICircleBridge.sol";
+import "../interfaces/ICircleBridgeV2.sol";
 import "../safeguard/Governor.sol";
 import "../safeguard/Pauser.sol";
 
