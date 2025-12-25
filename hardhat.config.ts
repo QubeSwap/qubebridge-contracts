@@ -40,6 +40,9 @@ const avalancheTestPrivateKey = process.env.AVALANCHE_TEST_PRIVATE_KEY || DEFAUL
 const polygonTestEndpoint = process.env.POLYGON_TEST_ENDPOINT || DEFAULT_ENDPOINT;
 const polygonTestPrivateKey = process.env.POLYGON_TEST_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
 
+const monadTestEndpoint = process.env.MONAD_TEST_ENDPOINT || DEFAULT_ENDPOINT;
+const monadTestPrivateKey = process.env.MONAD_TEST_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
+
 
 // Mainnets
 const ethMainnetEndpoint = process.env.ETH_MAINNET_ENDPOINT || DEFAULT_ENDPOINT;
@@ -62,6 +65,9 @@ const avalanchePrivateKey = process.env.AVALANCHE_PRIVATE_KEY || DEFAULT_PRIVATE
 
 const seiEndpoint = process.env.SEI_ENDPOINT || DEFAULT_ENDPOINT;
 const seiPrivateKey = process.env.SEI_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
+
+const monadEndpoint = process.env.MONAD_ENDPOINT || DEFAULT_ENDPOINT;
+const monadPrivateKey = process.env.MONAD_PRIVATE_KEY || DEFAULT_PRIVATE_KEY;
 
 // use kmsKeyId if it's not empty, otherwise use privateKey
 function getNetworkConfig(url: string, kmsKeyId: string, privateKey: string, gasPrice?: number): NetworkUserConfig {
@@ -124,6 +130,7 @@ const config: HardhatUserConfig = {
 	qubetics: getNetworkConfig(qubeticsEndpoint, kmsKeyId, qubeticsPrivateKey),
     base: getNetworkConfig(baseEndpoint, kmsKeyId, basePrivateKey),
 	sei: getNetworkConfig(seiEndpoint, kmsKeyId, seiPrivateKey),
+	monad: getNetworkConfig(monadEndpoint, kmsKeyId, monadPrivateKey),
   },
   namedAccounts: {
     deployer: {
@@ -205,6 +212,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: process.env.SEI_API_ENDPOINT || '',
           browserURL: process.env.SEI_EXPLORER || ''
+        }
+      },
+	  {
+        network: 'monad',
+        chainId: 143,
+        urls: {
+          apiURL: process.env.MONAD_API_ENDPOINT || '',
+          browserURL: process.env.MONAD_EXPLORER || ''
         }
       },
 	  {
