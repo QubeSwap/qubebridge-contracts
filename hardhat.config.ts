@@ -124,7 +124,7 @@ const config: HardhatUserConfig = {
     // Mainnets
     ethMainnet: getNetworkConfig(ethMainnetEndpoint, kmsKeyId, ethMainnetPrivateKey),
     bsc: getNetworkConfig(bscEndpoint, kmsKeyId, bscPrivateKey),
-    polygon: getNetworkConfig(polygonEndpoint, kmsKeyId, polygonPrivateKey),
+    polygon: getNetworkConfig(polygonEndpoint, kmsKeyId, polygonPrivateKey, 50000000000),
     avalanche: getNetworkConfig(avalancheEndpoint, kmsKeyId, avalanchePrivateKey),
 	qubetics: getNetworkConfig(qubeticsEndpoint, kmsKeyId, qubeticsPrivateKey),
     base: getNetworkConfig(baseEndpoint, kmsKeyId, basePrivateKey),
